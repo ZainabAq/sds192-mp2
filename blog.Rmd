@@ -29,3 +29,12 @@ new_contributions <- contributions %>%
   select(cmte_id, city, name, state,transaction_amt,cand_id)
 ```
 
+```{r}
+state_table <- new_candidates %>%
+  inner_join(new_contributions, by = c("cand_city" = "city")) 
+```
+
+```{r}
+new_contributions2 <- new_contributions %>%
+  group_by(transaction_amt)
+```
