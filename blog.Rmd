@@ -25,19 +25,16 @@ new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
   filter(party == "R" | party == "D")
   
-filterVotes(field = "primary_votes")
-filterVotes(field = "general_votes")
+filterVotes(field1 = primary_votes, field2 = general_votes)
+
+filterVotes <- function(field1, field2) {
+    dplyr::filter(new_house, field1 > 0  & field2 > 0)
+}
 
 finalData <- new_house %>%
-  #filter(primary_votes > 0 & general_votes > 0) %>%
   mutate(diff = general_votes - primary_votes) %>%
   arrange(desc(diff)) %>%
   top_n(100)
-
-filterVotes <- function(field) {
-  new_house %>%
-    filter(field > 0)
-}
 
 ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party))
 ```
