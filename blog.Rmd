@@ -20,15 +20,20 @@ library(tidyverse)
 ```
 
 ```{r}
+<<<<<<< HEAD
 new_candidates <- candidates %>%
   select(cand_name,cand_id,)
 ```
 
 ```{r}
+=======
+>>>>>>> c548d4589ca24b6ada4d3f3cdd41a29e1cdffd4c
 new_contributions <- contributions %>%
-  select(cmte_id, city, name, state,transaction_amt,cand_id)
-```
+  select(cmte_id, city, name, state, transaction_amt, transaction_pgi, cand_id, zip_code) %>%
+  filter(transaction_pgi == "P") %>%
+  arrange(desc(transaction_amt))
 
+<<<<<<< HEAD
 ```{r}
 rm(state_table)
 ```
@@ -40,4 +45,6 @@ state_table <- new_candidates %>%
 
 ```{r}
 
+=======
+>>>>>>> c548d4589ca24b6ada4d3f3cdd41a29e1cdffd4c
 ```
