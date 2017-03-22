@@ -25,10 +25,10 @@ new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
   filter(party == "R" | party == "D")
   
-filterVotes(field1 = primary_votes, field2 = general_votes)
+filterVotes(field1 = "primary_votes", field2 = "general_votes")
 
 filterVotes <- function(field1, field2) {
-    dplyr::filter(new_house, field1 > 0  & field2 > 0)
+    dplyr::filter_(new_house, field1 > 0  & field2 > 0)
 }
 
 finalData <- new_house %>%
@@ -37,4 +37,17 @@ finalData <- new_house %>%
   top_n(100)
 
 ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party))
+```
+
+```{r}
+new_contributions <- contributions %>%
+  select(cmte_id, city, name, state, transaction_amt, transaction_pgi, cand_id, zip_code) %>%
+  filter(transaction_pgi == "P") %>%
+  arrange(desc(transaction_amt))
+
+```
+
+```{r}
+state_table <- new_candidates %>%
+  inner_join(new_contributions, by = c("cand_id" = "cand_id")) 
 ```
