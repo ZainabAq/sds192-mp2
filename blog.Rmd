@@ -17,12 +17,27 @@ load("contributions.rda")
 
 ```{r}
 library(tidyverse)
+library(ggplot2)
 ```
 
 ```{r}
-new_contributions <- contributions %>%
-  select(cmte_id, city, name, state, transaction_amt, transaction_pgi, cand_id, zip_code) %>%
-  filter(transaction_pgi == "P") %>%
-  arrange(desc(transaction_amt))
+new_house <- house_elections %>%
+  select(party, primary_votes, general_votes, state, ge_winner) %>%
+  filter(party == "R" | party == "D")
+  
+filterVotes(field = "primary_votes")
+filterVotes(field = "general_votes")
 
+finalData <- new_house %>%
+  #filter(primary_votes > 0 & general_votes > 0) %>%
+  mutate(diff = general_votes - primary_votes) %>%
+  arrange(desc(diff)) %>%
+  top_n(100)
+
+filterVotes <- function(field) {
+  new_house %>%
+    filter(field > 0)
+}
+
+ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party))
 ```
