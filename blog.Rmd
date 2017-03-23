@@ -28,7 +28,8 @@ new_house <- house_elections %>%
 filterVotes(field1 = "primary_votes", field2 = "general_votes")
 
 filterVotes <- function(field1, field2) {
-    dplyr::filter_(new_house, field1 > 0  & field2 > 0)
+  new_house %>% 
+   filter( field1 > 0, !is.na(field1)  & field2 > 0, !is.na(field2))
 }
 
 finalData <- new_house %>%
