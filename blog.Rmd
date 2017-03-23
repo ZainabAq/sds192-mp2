@@ -36,7 +36,7 @@ finalData <- new_house %>%
   arrange(desc(diff)) %>%
   top_n(100)
 
-ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party))
+ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party)) + scale_color_manual(values = c("blue", "red"))
 ```
 
 ```{r}
