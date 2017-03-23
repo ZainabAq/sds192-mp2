@@ -48,8 +48,8 @@ finalData <- new_house %>%
 
 
 #creates graph plotting number of primary votes against general votes
-#red dots represent republican candidates, blue represent democrat
-ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party)) + scale_color_manual(values = c("blue", "red"))
+#shows candidate party and if they won in the general election
+ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("blue", "red")) + geom_smooth(method = "lm", se = TRUE)
 ```
 
 ```{r}
