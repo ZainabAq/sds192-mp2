@@ -5,22 +5,17 @@ date: "March 24, 2017"
 output: html_document
 ---
 
-
-## Loading the data
-
 ```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
-```
-
-```{r}
 library(tidyverse)
 library(ggplot2)
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #creates smaller, more manageable dataset that only has columns for
 #candidate's party, number of primary votes, number of general votes, state
 #and whether or not they won the general election
@@ -29,19 +24,19 @@ new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
   filter(party == "R" | party == "D")
 
+filterVotes <- function(votes) {
+    new_house %>%
+    filter(primary_votes > votes  & general_votes > votes)
+}
+
 #takes out candidates who recieved zero votes in general election
 #(presumably because they lost primaries or dropped out)
 #or recieved zero votes in primaries (presumably because they started campaign after)  
-filterVotes(field1 = "primary_votes", field2 = "general_votes")
-
-filterVotes <- function(field1, field2) {
-    dplyr::filter_(new_house, field1 > 0  & field2 > 0)
-}
 
 
 #data for graph, only shows top 100 candidates with greatest difference between
 #primary and general election votes
-finalData <- new_house %>%
+finalData <- filterVotes(votes = 0) %>%
   mutate(diff = general_votes - primary_votes) %>%
   arrange(desc(diff)) %>%
   top_n(100)
@@ -49,26 +44,14 @@ finalData <- new_house %>%
 
 #creates graph plotting number of primary votes against general votes
 #shows candidate party and if they won in the general election
-ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("blue", "red")) + geom_smooth(method = "lm", se = TRUE)
+ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#17279C", "#C32B10")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0"))
 ```
 
-```{r}
-new_contributions <- contributions %>%
-  select(cmte_id, city, name, state, transaction_amt, transaction_pgi, cand_id, zip_code) %>%
-  filter(transaction_pgi == "P") %>%
-  arrange(desc(transaction_amt))
-
-```
-
-```{r}
-state_table <- new_candidates %>%
-  inner_join(new_contributions, by = c("cand_id" = "cand_id")) 
-```
 Blog post:
 
 In the American electoral system, primaries work to filter out candidates before the general election. How they work exactly varies state by state. Some states elect to hold caucuses instead of or in addition to primaries, and there are different rules about non-partisans and members of an opposing party casting a ballot. However, they all have the same basic function of citizens voting for their prefered party candidate. Only the winning candidate per party may run in the general election.
 
-
+Our graph explores the phenomenon that many people who do not vote in the primaries still vote in the general election. We filtered the election data by the greatest difference between primary votes and general votes. The graphic illustrates this distribution for the democratic and republican parties, respectively. 
 
 Baseline
 
@@ -81,7 +64,7 @@ x    +1 unnecessary messages from R are hidden from being displayed in the HTML
 Average
 
     +1 for explaining in a single coherent sentence what we can learn from these data
-    +1 for writing a function rather than re-writing the same code multiple times
+x   +1 for writing a function rather than re-writing the same code multiple times
     +1 for using at least one join (e.g. left_join(), inner_join(), etc.)
 x    +1 blog post text provides context or background useful in interpreting the graphic
 x    +1 for using GitHub for version control
