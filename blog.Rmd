@@ -13,6 +13,7 @@ load("committees.rda")
 load("contributions.rda")
 library(tidyverse)
 library(ggplot2)
+library(ggthemes)
 ```
 
 ```{r message=FALSE, warning=FALSE}
@@ -73,10 +74,3 @@ Advanced
 
 x    +1 for using the Issues tab on GitHub to plan your project
     +1 WOW factor: awarded at the professors’ discretion for submissions that are exceptionally compelling
-
-
-
-
-
-
-
