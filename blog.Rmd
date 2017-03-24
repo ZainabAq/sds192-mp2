@@ -34,9 +34,6 @@ filterVotes <- function(votes) {
     filter(primary_votes > votes  & general_votes > votes)
 }
 
-filterVotes(votes = 0)
-
-
 #takes out candidates who recieved zero votes in general election
 #(presumably because they lost primaries or dropped out)
 #or recieved zero votes in primaries (presumably because they started campaign after)  
@@ -44,7 +41,7 @@ filterVotes(votes = 0)
 
 #data for graph, only shows top 100 candidates with greatest difference between
 #primary and general election votes
-finalData <- new_house %>%
+finalData <- filterVotes(votes = 0) %>%
   mutate(diff = general_votes - primary_votes) %>%
   arrange(desc(diff)) %>%
   top_n(100)
