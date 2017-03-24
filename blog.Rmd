@@ -54,7 +54,7 @@ finalData_Rep <- filterVotes(votes = 0) %>%
 #shows candidate party and if they won in the general election
 ggplot(finalData_Dem, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#17279C")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0"))+ ylim(150000,400000)
 
-ggplot(finalData_Rep, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#C32B10")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0")) + ylim(150000,400000) + 
+ggplot(finalData_Rep, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#C32B10")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0")) + ylim(150000,400000)
 ```
 
 Blog post:
