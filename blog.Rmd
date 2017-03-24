@@ -25,15 +25,13 @@ new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
   filter(party == "R" | party == "D")
 
+#to remove candidates who recieved zero votes in general election
+#(presumably because they lost primaries or dropped out)
+#or recieved zero votes in primaries (presumably because they started campaign after)
 filterVotes <- function(votes) {
     new_house %>%
     filter(primary_votes > votes  & general_votes > votes)
 }
-
-#takes out candidates who recieved zero votes in general election
-#(presumably because they lost primaries or dropped out)
-#or recieved zero votes in primaries (presumably because they started campaign after)  
-
 
 #data for graph, only shows top 100 candidates with greatest difference between
 #primary and general election votes
