@@ -1,5 +1,5 @@
 ---
-title: "Mini-Project 2"
+title: "Difference in Primary and General Votes"
 author: "Jessica Keast, Zainab Rizvi, Rachel LaFlamme"
 date: "March 24, 2017"
 output: html_document
@@ -60,6 +60,9 @@ Blog post:
 In the American electoral system, primaries work to filter out candidates before the general election. How they work exactly varies state by state. Some states elect to hold caucuses instead of or in addition to primaries, and there are different rules about non-partisans and members of an opposing party casting a ballot. However, they all have the same basic function of citizens voting for their prefered party candidate. Only the winning candidate per party may run in the general election.
 
 Our graph explores the phenomenon that many people who do not vote in the primaries still vote in the general election and that many who voted for a different candidate in the primaries will switch their vote for the general election, probably due to their preferred candidate dropping out. We filtered the election data by the greatest difference between primary votes and general votes. The graphic illustrates this distribution for the democratic and republican parties, respectively. 
+
+
+One sentence: The data graphics depict the voter turn out for the top hundred candidates with the highest difference between primary votes and general votes for the Democratic and the Republican party, respectively. 
 
 Baseline
 
