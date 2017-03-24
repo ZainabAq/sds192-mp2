@@ -5,6 +5,8 @@ date: "March 24, 2017"
 output: html_document
 ---
 
+One sentence: The data graphics depict the voter turn out for the top hundred candidates with the highest difference between primary votes and general votes for the Democratic and the Republican party, respectively. 
+
 ```{r, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 load("house_elections.rda")
@@ -60,27 +62,3 @@ Blog post:
 In the American electoral system, primaries work to filter out candidates before the general election. How they work exactly varies state by state. Some states elect to hold caucuses instead of or in addition to primaries, and there are different rules about non-partisans and members of an opposing party casting a ballot. However, they all have the same basic function of citizens voting for their prefered party candidate. Only the winning candidate per party may run in the general election.
 
 Our graph explores the phenomenon that many people who do not vote in the primaries still vote in the general election and that many who voted for a different candidate in the primaries will switch their vote for the general election, probably due to their preferred candidate dropping out. We filtered the election data by the greatest difference between primary votes and general votes. The graphic illustrates this distribution for the democratic and republican parties, respectively. 
-
-
-One sentence: The data graphics depict the voter turn out for the top hundred candidates with the highest difference between primary votes and general votes for the Democratic and the Republican party, respectively. 
-
-Baseline
-
-x    +1 for an .Rmd that compiles without errors
-x    +1 for including the code that wrangled the data
-x    +1 for using at least two of the five basic verbs (i.e., select(), mutate(), etc.)
-x    +1 for annotating your data wrangling pipeline (this can be in a few sentences in text surrounding the R code chunks, or some informative comments inside the R code chunks)
-x    +1 unnecessary messages from R are hidden from being displayed in the HTML
-
-Average
-
-    +1 for explaining in a single coherent sentence what we can learn from these data
-x   +1 for writing a function rather than re-writing the same code multiple times
-    +1 for using at least one join (e.g. left_join(), inner_join(), etc.)
-x    +1 blog post text provides context or background useful in interpreting the graphic
-x    +1 for using GitHub for version control
-
-Advanced
-
-x    +1 for using the Issues tab on GitHub to plan your project
-    +1 WOW factor: awarded at the professors’ discretion for submissions that are exceptionally compelling
