@@ -5,22 +5,17 @@ date: "March 24, 2017"
 output: html_document
 ---
 
-
-## Loading the data
-
 ```{r, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
 load("house_elections.rda")
 load("candidates.rda")
 load("committees.rda")
 load("contributions.rda")
-```
-
-```{r}
 library(tidyverse)
 library(ggplot2)
 ```
 
-```{r}
+```{r message=FALSE, warning=FALSE}
 #creates smaller, more manageable dataset that only has columns for
 #candidate's party, number of primary votes, number of general votes, state
 #and whether or not they won the general election
