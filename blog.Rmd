@@ -1,5 +1,5 @@
 ---
-title: "Mini-Project 2"
+title: "Difference in Primary and General Votes"
 author: "Jessica Keast, Zainab Rizvi, Rachel LaFlamme"
 date: "March 24, 2017"
 output: html_document
