@@ -25,11 +25,12 @@ new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
   filter(party == "R" | party == "D")
   
-filterVotes(field1 = "primary_votes", field2 = "general_votes")
-
-filterVotes <- function(field1, field2) {
-    dplyr::filter_(new_house, field1 > 0  & field2 > 0)
+filterVotes <- function(votes) {
+    new_house %>%
+    filter(primary_votes > votes  & general_votes > votes)
 }
+
+filterVotes(votes = 0)
 
 finalData <- new_house %>%
   mutate(diff = general_votes - primary_votes) %>%
