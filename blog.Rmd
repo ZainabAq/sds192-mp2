@@ -18,39 +18,24 @@ load("contributions.rda")
 ```{r}
 library(tidyverse)
 library(ggplot2)
+library(ggthemes)
 ```
 
 ```{r}
-#creates smaller, more manageable dataset that only has columns for
-#candidate's party, number of primary votes, number of general votes, state
-#and whether or not they won the general election
-#only shows data for candidates in democrat and republican parties
 new_house <- house_elections %>%
   select(party, primary_votes, general_votes, state, ge_winner) %>%
-  filter(party == "R" | party == "D")
-
-#takes out candidates who recieved zero votes in general election
-#(presumably because they lost primaries or dropped out)
-#or recieved zero votes in primaries (presumably because they started campaign after)  
-filterVotes(field1 = "primary_votes", field2 = "general_votes")
-
-filterVotes <- function(field1, field2) {
-  new_house %>% 
-   filter( field1 > 0, !is.na(field1)  & field2 > 0, !is.na(field2))
+  filter(party == "R" | party == "D") 
+  
+filter_Votes <- function(fieldA, fieldB) {
+  newdata <- new_house %>% 
+   filter(fieldA > 0) %>%
+   filter(fieldB > 0) %>%
+   mutate(diff = general_votes - primary_votes) %>%
+   arrange(desc(diff)) %>%
+   top_n(100) 
+ggplot(newdata, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party)) + scale_color_manual(values = c("blue", "red")) + theme_wsj()
 }
-
-
-#data for graph, only shows top 100 candidates with greatest difference between
-#primary and general election votes
-finalData <- new_house %>%
-  mutate(diff = general_votes - primary_votes) %>%
-  arrange(desc(diff)) %>%
-  top_n(100)
-
-
-#creates graph plotting number of primary votes against general votes
-#shows candidate party and if they won in the general election
-ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("blue", "red")) + geom_smooth(method = "lm", se = TRUE)
+filter_Votes(fieldA= "primary_votes", fieldB = "general_votes")
 ```
 
 ```{r}
@@ -65,36 +50,3 @@ new_contributions <- contributions %>%
 state_table <- new_candidates %>%
   inner_join(new_contributions, by = c("cand_id" = "cand_id")) 
 ```
-Blog post:
-
-In the American electoral system, primaries work to filter out candidates before the general election. How they work exactly varies state by state. Some states elect to hold caucuses instead of or in addition to primaries, and there are different rules about non-partisans and members of an opposing party casting a ballot. However, they all have the same basic function of citizens voting for their prefered party candidate. Only the winning candidate per party may run in the general election.
-
-
-
-Baseline
-
-x    +1 for an .Rmd that compiles without errors
-x    +1 for including the code that wrangled the data
-x    +1 for using at least two of the five basic verbs (i.e., select(), mutate(), etc.)
-    +1 for annotating your data wrangling pipeline (this can be in a few sentences in text surrounding the R code chunks, or some informative comments inside the R code chunks)
-x    +1 unnecessary messages from R are hidden from being displayed in the HTML
-
-Average
-
-    +1 for explaining in a single coherent sentence what we can learn from these data
-    +1 for writing a function rather than re-writing the same code multiple times
-    +1 for using at least one join (e.g. left_join(), inner_join(), etc.)
-    +1 blog post text provides context or background useful in interpreting the graphic
-x    +1 for using GitHub for version control
-
-Advanced
-
-x    +1 for using the Issues tab on GitHub to plan your project
-    +1 WOW factor: awarded at the professors’ discretion for submissions that are exceptionally compelling
-
-
-
-
-
-
-
