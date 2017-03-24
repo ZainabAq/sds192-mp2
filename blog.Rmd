@@ -37,7 +37,14 @@ filterVotes <- function(votes) {
 
 #data for graph, only shows top 100 candidates with greatest difference between
 #primary and general election votes
-finalData <- filterVotes(votes = 0) %>%
+finalData_Dem <- filterVotes(votes = 0) %>%
+  filter(party == "D") %>%
+  mutate(diff = general_votes - primary_votes) %>%
+  arrange(desc(diff)) %>%
+  top_n(100)
+
+finalData_Rep <- filterVotes(votes = 0) %>%
+  filter(party == "R") %>%
   mutate(diff = general_votes - primary_votes) %>%
   arrange(desc(diff)) %>%
   top_n(100)
@@ -45,7 +52,9 @@ finalData <- filterVotes(votes = 0) %>%
 
 #creates graph plotting number of primary votes against general votes
 #shows candidate party and if they won in the general election
-ggplot(finalData, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#17279C", "#C32B10")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0"))
+ggplot(finalData_Dem, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#17279C")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0"))
+
+ggplot(finalData_Rep, aes(x = primary_votes, y = general_votes)) + geom_point(aes(color = party, shape = ge_winner)) + scale_color_manual(values = c("#C32B10")) + geom_smooth(method = "lm", se = TRUE) + theme(panel.background = element_rect(fill = "#e6dff0"), panel.grid.major = element_line(color = "#e6dff0"), panel.grid.minor = element_line(color = "#e6dff0"))
 ```
 
 Blog post:
